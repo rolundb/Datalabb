@@ -1,24 +1,35 @@
 def readFile():
     with open("geodataSW2.txt", "r", encoding="utf-8") as f:
         Haj = []
+        
         for line in f:
-            if line.strip() != "" and not line.startswith("#"):
-                for a in range(6):
+            a = 1
+            while a != 0:
+                if line.strip() != "" and not line.startswith("#"):
+                    
                     if a == 1:
                         name = line
-                    elif a == 2:
-                        description = line
-                    elif a == 3:
+                        a=a+1
+
+                    elif a== 2:
+                         description = line
+                         a=a+1
+
+                    elif a== 3:
                         latitude = line
+                        a=a+1
+
                     elif a == 4:
                         longitude = line
+                        a=a+1
+
                     elif a == 5:
                         date = line
+                        a=0                   
+      
 
-                Haj.append(Place(name, description, latitude, longitude, date))
+            Haj.append(Place(name, description, latitude, longitude, date))
                 
-            else:
-                None
     return Haj
 
             
@@ -50,4 +61,4 @@ def main():
     print("poop")
 
 
-main()
+print("kiss")

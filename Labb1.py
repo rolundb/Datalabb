@@ -1,6 +1,8 @@
 import time
+from operator import attrgetter
 
 def readFile():
+    """Läser in filen geodataSW2 och skapar objekt med egenskaper motsvarande fem parametrar"""
     with open("geodataSW2.txt", "r", encoding="utf-8") as f:
         array_list = []
         a=1
@@ -27,6 +29,7 @@ def readFile():
     return array_list
 
 def findPlace(intext, array):
+    """Går igenom listan med objekt och hittar objektet med namn motsvarande intext"""
     time_start = time.time()
     for x in array:
         if x.getName() == intext:
@@ -64,6 +67,7 @@ def main():
     print(all_places)
     intext = input("Skriv ett land: ")
     findPlace(intext, all_places)
+    all_places_sorted = sorted(all_places, key=attrgetter('longitude'))
 
 
 main()

@@ -1,3 +1,6 @@
+
+import timeit
+
 def readFile():
     with open("geodataSW2.txt", "r", encoding="utf-8") as f:
         array_list = []
@@ -24,20 +27,15 @@ def readFile():
                
     return array_list
 
-def findPlace(intext, array):
-    for x in array:
-        if x.getName() == intext:
-            print(x)
-
             
 class Place:
 
     def __init__(self, name, description, latitude, longitude, date):
-        self.name = name.strip()
-        self.description = description.strip()
-        self.latitude = latitude.strip()
-        self.longitude = longitude.strip()
-        self.date = date.strip()
+        self.name = name
+        self.description = description
+        self.latitude = latitude
+        self.longitude = longitude
+        self.date = date
 
 
     def getName(self):
@@ -45,7 +43,6 @@ class Place:
         return self.name
 
     def getLongitude(self):
-        '''Returnerar longitud för platsen'''
         return int(self.longitude)
         
         
@@ -55,10 +52,12 @@ class Place:
 def main():
 
     all_places = readFile()
-    print(all_places)
-    intext = input("Skriv ett land: ")
-    findPlace(intext, all_places)
-    
+    print(all_places[2])
 
 
-main()
+
+
+
+
+
+

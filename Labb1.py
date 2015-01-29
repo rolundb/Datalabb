@@ -1,3 +1,5 @@
+import time
+
 def readFile():
     with open("geodataSW2.txt", "r", encoding="utf-8") as f:
         array_list = []
@@ -25,9 +27,13 @@ def readFile():
     return array_list
 
 def findPlace(intext, array):
+    time_start = time.time()
     for x in array:
         if x.getName() == intext:
             print(x)
+    time_end = time.time()
+    time_passed = time_end-time_start
+    print(time_passed)
 
             
 class Place:
@@ -58,7 +64,6 @@ def main():
     print(all_places)
     intext = input("Skriv ett land: ")
     findPlace(intext, all_places)
-    
 
 
 main()

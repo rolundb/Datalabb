@@ -1,25 +1,28 @@
 def readFile():
     with open("geodataSW2.txt", "r", encoding="utf-8") as f:
-        Haj = []
+        array_list = []
+        a=1
         for line in f:
             if line.strip() != "" and not line.startswith("#"):
-                for a in range(6):
+
                     if a == 1:
                         name = line
+                        a=a+1
                     elif a == 2:
                         description = line
+                        a=a+1
                     elif a == 3:
                         latitude = line
+                        a=a+1
                     elif a == 4:
                         longitude = line
+                        a=a+1
                     elif a == 5:
                         date = line
-
-                Haj.append(Place(name, description, latitude, longitude, date))
-                
-            else:
-                None
-    return Haj
+                        array_list.append(Place(name, description, latitude, longitude, date))
+                        a=1
+               
+    return array_list
 
             
 class Place:
@@ -46,8 +49,7 @@ class Place:
 def main():
 
     all_places = readFile()
-    print(all_places[1])
-    print("poop")
+    print(all_places[2])
 
 
 main()

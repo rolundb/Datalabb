@@ -61,8 +61,8 @@ class Place:
     def __str__(self):
         return "This is " +str(self.name)+ ". Welcome! This is a " +str(self.description)+ " place."
 
-def findSouthernSpot(array_list):
-    test = array_list.sort(key = attrgetter('longitude'))
+def findSouthernSpot():
+    test = array_list.sort(key = attrgetter('longitude'), reverse = True)
     print(test)
 
 
@@ -72,5 +72,7 @@ def main():
     print(all_places)
     intext = input("Skriv ett land: ")
     findPlace(intext, all_places)
-    findSouthernSpot(all_places)
+    findSouthernSpot()
+
+
 main()

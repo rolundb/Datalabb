@@ -7,7 +7,7 @@
 Ålands Hav
 Hydrographic
 600000
-193000
+19399999999
 2012-10-18
 
 Alanen Hirvaskoski
@@ -37,7 +37,7 @@ Hydrographic
 Mukkajärvi
 Hydrographic
 685300
-210000
+100
 2014-05-20
 
 Jatunniva

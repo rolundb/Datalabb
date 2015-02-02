@@ -1,5 +1,6 @@
 import time
 import sys
+import os
 from operator import attrgetter
 
 # Reads from .txt-file and extracts relevant lines which becomes attributes for objects that are
@@ -8,29 +9,30 @@ from operator import attrgetter
 # return: the_array_list        List of objects created based on content of .txt file.
 
 def readFile():
-    """Läser in filen geodataCH och skapar objekt med egenskaper motsvarande fem parametrar"""
-    with open("geodataSW2.txt", "r", encoding="utf-8") as f:
+    with open("geodataSW.txt", "r", encoding="utf-8") as f:
         the_array_list = []
-        a=1
+        the_reset = 0
+        a= the_reset
         for line in f:
             if line.strip() != "" and not line.startswith("#"):
+                a+=1
+                
+                if a == 1:
+                    name = line
 
-                    if a == 1:
-                        name = line
-                        a+=1
-                    elif a == 2:
-                        description = line
-                        a+=1
-                    elif a == 3:
-                        latitude = line
-                        a+=1
-                    elif a == 4:
-                        longitude = line
-                        a+=1
-                    elif a == 5:
-                        date = line
-                        the_array_list.append(Place(name, description, latitude, longitude, date))
-                        a=1
+                elif a == 2:
+                    description = line
+
+                elif a == 3:
+                    latitude = line
+
+                elif a == 4:
+                    longitude = line
+
+                elif a == 5:
+                    date = line
+                    the_array_list.append(Place(name, description, latitude, longitude, date))
+                    a = the_reset
                
     return the_array_list
 
@@ -42,7 +44,6 @@ def readFile():
 # return: None
 
 def findPlace(an_intext, an_array):
-    """Tar emot input från användaren och en lista med objekt, hittar objektet med namn motsvarande intext, och tar tid på sökningen."""
     the_time_start = time.time()
     for x in an_array:
         if x.getName().lower() == an_intext.lower(): 
@@ -53,7 +54,7 @@ def findPlace(an_intext, an_array):
             return
 
     print("\n" +an_intext +" could not be found. Please try again.\n\n")
-    main()
+    os._exit(0)
 
     
 

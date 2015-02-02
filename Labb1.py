@@ -5,10 +5,11 @@ from operator import attrgetter
 # Reads from .txt-file and extracts relevant lines which becomes attributes for objects that are
 #placed in an array.
 #
+#parameter1 a_filename      Name of a txt-file.
 # return: the_array_list        List of objects created based on content of .txt file.
 
-def readFile():
-    with open("geodataSW.txt", "r", encoding="utf-8") as f:
+def readFile(a_filename):
+    with open(a_filename, "r", encoding="utf-8") as f:
         the_array_list = []
         the_reset = 0
         i= the_reset
@@ -93,7 +94,7 @@ class Place:
         return  str(self.name)+ ", often refferd to as " +str(self.description)
 
 def main():
-    all_places = readFile()
+    all_places = readFile("geodataCH.txt")
     intext = input("Welcome to Locator! \n You can search for a location and get information about it. As a bonus, we'll throw in the name of the most southern place.\n Type in a geografic location: ")
     findPlace(intext, all_places)
     southernPlace(all_places)

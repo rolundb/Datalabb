@@ -1,11 +1,16 @@
 import time
-
+import sys
 from operator import attrgetter
+
+# Reads from .txt-file and extracts relevant lines which becomes attributes for objects that are
+#placed in an array.
+#
+# return: the_array_list        List of objects created based on content of .txt file.
 
 def readFile():
     """Läser in filen geodataCH och skapar objekt med egenskaper motsvarande fem parametrar"""
     with open("geodataSW2.txt", "r", encoding="utf-8") as f:
-        array_list = []
+        the_array_list = []
         a=1
         for line in f:
             if line.strip() != "" and not line.startswith("#"):
@@ -24,41 +29,47 @@ def readFile():
                         a+=1
                     elif a == 5:
                         date = line
-                        array_list.append(Place(name, description, latitude, longitude, date))
+                        the_array_list.append(Place(name, description, latitude, longitude, date))
                         a=1
                
-    return array_list #returnerar en array med platser lagrade som objekt från klassen Place
+    return the_array_list
 
-def findPlace(intext, array):
+
+# Matches the users input with object in list and runs the __str__-method for said object
+#
+# parameter1 an_intext      User input that is matched with attribute "name" of objects in an_array. 
+# parameter2 an_array       An array with objects.
+# return: None
+
+def findPlace(an_intext, an_array):
     """Tar emot input från användaren och en lista med objekt, hittar objektet med namn motsvarande intext, och tar tid på sökningen."""
-    time_start = time.time() #Tid vid start av "sökfunktionen"
-    for x in array:
-        if x.getName().lower() == intext.lower(): #Om namnet för specifikt objekt matchar användarens input, kör __str__-funktion för sagda objekt.
+    the_time_start = time.time()
+    for x in an_array:
+        if x.getName().lower() == an_intext.lower(): 
             print(x)
+            the_time_end = time.time()
+            the_time_passed = the_time_end-the_time_start 
+            print("Time for search:" + str(the_time_passed)+ " seconds.")
+            return
+
+    print("\n" +an_intext +" could not be found. Please try again.\n\n")
+    main()
+
+    
 
 
-       #else:
-            #print(intext +"could not be found, try again")
-            
-            
-            
-    time_end = time.time() #Tid då "sökfunktionen" är klar
-    time_passed = time_end-time_start #Åtgången tid
-    print("Time for search:" + str(time_passed))
-
-
-def userData():
-    """Tar emot indata som sedan blir ett ställe som matchas mot listan med object"""
-    return input("Welcome to Locator! \n You can search for a location and get information about it.\n Type in a geografic location: ") 
-
-def southernPlace(array_list):
-    '''Sorterar en lista med objekt i storleksordning vad gäller attributet longitud, från minst till störst och skriver ut den sydligaste'''
-    all_places_sorted = sorted(array_list, key=attrgetter('longitude')) 
+# Sorts an array with objects for attribute "longitude" and runs the __str__ method for object with lowest number for "longitude".
+#
+# parameter1 an_arrray     An array with objects that has the attribute "longitude".
+# return: None
+          
+def southernPlace(an_array):
+    all_places_sorted = sorted(an_array, key=attrgetter('longitude')) 
     print("However, the most southern place is " + str(all_places_sorted[0]))
     
 
 class Place:
-    '''Skapar en klass med attribut för namn, beskrivning, latitud, longitud och datum'''
+    '''Creates a class with attributes; name, description, latitude, longitude, date'''
 
     def __init__(self, name, description, latitude, longitude, date):
         self.name = name.strip()
@@ -69,24 +80,22 @@ class Place:
 
 
     def getName(self):
-        '''Returnerar namnet på platsen'''
+        '''Returns the name of the object'''
         return self.name
 
     def getLongitude(self):
-        '''Returnerar longitud för platsen'''
+        '''Returns the longitude of the object'''
         return int(self.longitude)
         
         
     def __str__(self):
-        """Returnerar en string av argumentet name och description"""
+        '''Returns a string of the name and description of the object'''
         return  str(self.name)+ ", often refferd to as " +str(self.description)
 
 def main():
-    """mainfunktionen för programmet"""
     all_places = readFile()
-    intext = userData()
+    intext = input("Welcome to Locator! \n You can search for a location and get information about it.\n Type in a geografic location: ")
     findPlace(intext, all_places)
-
     southernPlace(all_places)
 
 main()

@@ -37,8 +37,7 @@ def readFile():
     return the_array_list
 
 
-# Matches the users input with object in list and runs the __str__-method for said object.
-#If input does not match any object, the program will shutdown.
+# Matches the users input with object in list and runs the __str__-method for said object
 #
 # parameter1 an_intext      User input that is matched with attribute "name" of objects in an_array. 
 # parameter2 an_array       An array with objects.
@@ -48,10 +47,14 @@ def findPlace(an_intext, an_array):
     the_time_start = time.time()
     for x in an_array:
         if x.getName().lower() == an_intext.lower(): 
+            print(x)
             the_time_end = time.time()
             the_time_passed = the_time_end-the_time_start 
-            return x, the_time_passed
-    return None, None
+            print("Time for search:" + str(the_time_passed)+ " seconds.")
+            return
+
+    print("\n" +an_intext +" could not be found. Please try again.\n\n")
+    os._exit(0)
 
     
 
@@ -93,15 +96,7 @@ class Place:
 def main():
     all_places = readFile()
     intext = input("Welcome to Locator! \n You can search for a location and get information about it.\n Type in a geografic location: ")
-    place_found = findPlace(intext, all_places)[0]
-    time_taken = findPlace(intext, all_places)[1]
-    while place_found is None:
-        intext = input("Welcome to Locator! \n You can search for a location and get information about it.\n Type in a geografic location: ")
-        place_found = findPlace(intext, all_places)[0]
-        print("Hej manne")
-    else:
-        print(place_found)
-        print(time_taken)
-        southernPlace(all_places)
+    findPlace(intext, all_places)
+    southernPlace(all_places)
 
 main()

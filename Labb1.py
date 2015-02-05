@@ -80,6 +80,10 @@ class Place:
         self.date = date.strip()
 
 
+    def __str__(self):
+        '''Returns a string of the name and description of the object'''
+        return  str(self.name)+ ", often refferd to as " +str(self.description)
+
     def getName(self):
         '''Returns the name of the object'''
         return self.name
@@ -87,16 +91,19 @@ class Place:
     def getLongitude(self):
         '''Returns the longitude of the object'''
         return int(self.longitude)
+
+    def getDate(self):
+        """Returns the Date of the object"""
+        return int(self.date)
         
         
-    def __str__(self):
-        '''Returns a string of the name and description of the object'''
-        return  str(self.name)+ ", often refferd to as " +str(self.description)
+    
 
 def main():
     all_places = readFile("geodataCH.txt")
     intext = input("Welcome to Locator! \n You can search for a location and get information about it. As a bonus, we'll throw in the name of the most southern place.\n Type in a geografic location: ")
     findPlace(intext, all_places)
     southernPlace(all_places)
+    
 
 main()

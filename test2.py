@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 
 class ListQ:
 
@@ -60,3 +61,10 @@ cardTrick(kort, antalkort)
 
 
 
+=======
+q = Queue()
+
+q.enqueue("hej")
+
+print(q)
+>>>>>>> Stashed changes

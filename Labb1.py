@@ -50,7 +50,7 @@ def findPlace(an_intext, an_array):
             print(an_object)
             the_time_end = time.time()
             the_time_passed = the_time_end-the_time_start 
-            print("Time for search:" + str(the_time_passed)+ " seconds.")
+            print("Time for search:" + str(the_time_passed)+ " seconds.\n")
             return
 
     print("\n" + an_intext +" could not be found. Please restart the program to try again.\n\n")
@@ -65,9 +65,10 @@ def findPlace(an_intext, an_array):
 # return: None
           
 def southernPlace(an_array):
-    all_places_sorted = sorted(an_array, key=attrgetter('longitude')) 
-    print("However, the most southern place is " + str(all_places_sorted[0]) + ". If you want to search for another location, please restart the program.")
-    
+    all_places_sorted = sorted(an_array, key=attrgetter('latitude')) 
+    print("However, the most southern place is " + str(all_places_sorted[0]) + "If you want to search for another location, please restart the program.\n\n")
+    for i in range(10):
+        print(all_places_sorted[i])
 
 class Place:
     '''Creates a class with attributes; name, description, latitude, longitude, date'''
@@ -75,7 +76,7 @@ class Place:
     def __init__(self, name, description, latitude, longitude, date):
         self.name = name.strip()
         self.description = description.strip()
-        self.latitude = latitude.strip()
+        self.latitude = int(latitude.strip())
         self.longitude = longitude.strip()
         self.date = date.strip()
 
@@ -88,8 +89,9 @@ class Place:
         '''Returns the name of the object'''
         return self.name
 
-    def getLongitude(self):
+    def getDate(self):
         '''Returns the longitude of the object'''
+<<<<<<< Updated upstream
         return int(self.longitude)
 
     def getDate(self):
@@ -98,10 +100,33 @@ class Place:
         
         
     
+=======
+<<<<<<< HEAD
+        return str(self.date)
+
+    def getLatitude(self):
+        '''Returns the description of the object'''
+        return int(self.latitude)
+        
+        
+    def __str__(self):
+        '''Returns a string of the name and description of the object'''
+        return  self.getName()+ ", often refferd to as " +str(self.getLatitude())+ " during the time " + self.getDate() + ".\n"
+=======
+        return int(self.longitude)
+
+    def getDate(self):
+        """Returns the Date of the object"""
+        return int(self.date)
+        
+        
+    
+>>>>>>> FETCH_HEAD
+>>>>>>> Stashed changes
 
 def main():
-    all_places = readFile("geodataCH.txt")
-    intext = input("Welcome to Locator! \n You can search for a location and get information about it. As a bonus, we'll throw in the name of the most southern place.\n Type in a geografic location: ")
+    all_places = readFile("geodataSW.txt")
+    intext = input("Welcome to Locator! \n You can search for a location and get information about it. As a bonus, we'll throw in the name of the most southern place. Type in a geografic location: ")
     findPlace(intext, all_places)
     southernPlace(all_places)
     

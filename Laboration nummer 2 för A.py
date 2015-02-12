@@ -21,6 +21,17 @@ def stackCards(a_list):
     the_stack.push(i)
   return the_stack
 
+def revertOrder(a_list):
+  the_stack = Stack()
+  the_reverted_cards = []
+  for i in a_list:
+    the_stack.push(i)
+  while not the_stack.is_empty():
+    the_reverted_cards.append(the_stack.pop())
+  return the_reverted_cards
+
+
+
 
 def main():
    q = ListQ()
@@ -29,6 +40,7 @@ def main():
    cards_stacked = stackCards(card_list)
    enqueueCards(q, cards_stacked)
    cards_sorted = sortCards(q)
+   cards_sorted = revertOrder(cards_sorted)
    for i in cards_sorted:
       print (i, end = " ")
 

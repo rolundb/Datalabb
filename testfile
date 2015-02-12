@@ -1,0 +1,10 @@
+#Test enqueue method
+q = ListQ
+q.enqueue(1)
+if q[0] == 1
+	print("funktionen fungerar.")
+else:
+	print("Funktionen fungerar inte.")
+
+
+

@@ -1,4 +1,3 @@
-from ListQclass import ListQ
 from LinkedQclass import LinkedQ
 from StackClass import Stack
 
@@ -53,7 +52,7 @@ def revertOrder(a_list):
 
 
 def main():
-   q = ListQ()
+   q = LinkedQ()
    cards_input = input("\nPlease input cards from 1-13 in increasing size and seperate them by space. Either by name or number, eg 1 2 3 4 or ace two three four:\n")
    card_list = cards_input.split()
    cards_stacked = stackCards(card_list)

@@ -1,0 +1,87 @@
+import re
+from random import shuffle
+import time
+from BinTreeclass import Bintree
+
+def uppgift2():
+  svenska = Bintree()
+  with open("word3.txt", "r", encoding = "utf-8") as swefile:
+      for row in swefile:
+          word = row.strip()                
+          if svenska.exists(word):
+              print(word, end = " ") 
+          else:
+              svenska.put(word)            
+  print("\n")
+
+def uppgift3():
+  svenska = Bintree()
+  with open("word3.txt", "r", encoding = "utf-8") as swefile:
+      for row in swefile:
+          word = row.strip()               
+          if svenska.exists(word) == False:
+              svenska.put(word)             
+  
+  engelska = Bintree()
+  with open("engelska.txt", "r", encoding = "utf-8") as engfile:
+    for row in engfile:
+      for word in row.split():
+        word = re.sub("[^A-Za-z]", "", word)
+        if engelska.exists(word) == False and svenska.exists(word) == True:
+          print(word, end= " ")
+          engelska.put(word)
+
+def uppgift4():
+
+#Stores a value in the tree. If there is a root object,
+#tests if the value is already in the tree. If it is not
+#then adds a new child to the root.
+#
+# return: number_list   A list of shuffled numbers.
+  def randomList():
+    number_list = [i for i in range(10000000000000000000000000000000000000000000000000)]
+    shuffle(number_list)
+    return number_list
+
+#Fills a tree with objects from list.
+#
+# parameter1 tree      A tree.
+# parameter2 list  A list with objects.
+# return: None
+  def listToTree(tree, list):
+    for i in list:
+      tree.put(i)
+
+  tree = Bintree()
+  random_list = randomList()
+  listToTree(tree, random_list)
+  tic = time.time()
+  value = 35
+  if tree.exists(value):
+    toc = time.time()
+  else:
+    print("not found")
+  print("Time for tree passed:" + str(toc-tic) + " sec.")
+  tic = time.time()
+  if value in random_list:
+    toc = time.time()
+  print("Time for list passed:" + str(toc-tic) + " sec.")
+
+
+def uppgift5():
+  tree = Bintree()
+  with open("word3.txt", "r", encoding = "utf-8") as swefile:
+      for row in swefile:
+          word = row.strip()   
+          invert_word = word[::-1]           
+          if tree.exists(word) == False:
+              tree.put(word)
+          if word != invert_word and tree.exists(invert_word) == True:
+            print(word + "     " + invert_word)         
+
+
+
+
+
+
+

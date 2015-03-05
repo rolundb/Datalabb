@@ -1,6 +1,25 @@
 from BinTreeclass import Bintree
 from ListQclass import ListQ
+import sys
+import os
+import unittest
 
+
+class Queue:
+    def __init__(self):
+        self.items = []
+
+    def isEmpty(self):
+        return self.items == []
+
+    def enqueue(self, item):
+        self.items.insert(0,item)
+
+    def dequeue(self):
+        return self.items.pop()
+
+    def size(self):
+        return len(self.items)
 
 def bfs(g,start):
   start.setDistance(0)
@@ -17,25 +36,70 @@ def bfs(g,start):
         vertQueue.enqueue(nbr)
     currentVert.setColor('black')
 
- class Vertex:
-    def __init__(self,key):
-        self.id = key
-        self.connectedTo = {}
+def traverse(y):
+    x = y
+    while (x.getPred()):
+        print(x.getId())
+        x = x.getPred()
+    print(x.getId())
 
+class Vertex:
+    def __init__(self,num):
+        self.id = num
+        self.connectedTo = {}
+        self.color = 'white'
+        self.dist = sys.maxsize
+        self.pred = None
+        self.disc = 0
+        self.fin = 0
+
+    # def __lt__(self,o):
+    #     return self.id < o.id
+    
     def addNeighbor(self,nbr,weight=0):
         self.connectedTo[nbr] = weight
+        
+    def setColor(self,color):
+        self.color = color
+        
+    def setDistance(self,d):
+        self.dist = d
 
-    def __str__(self):
-        return str(self.id) + ' connectedTo: ' + str([x.id for x in self.connectedTo])
+    def setPred(self,p):
+        self.pred = p
 
+    def setDiscovery(self,dtime):
+        self.disc = dtime
+        
+    def setFinish(self,ftime):
+        self.fin = ftime
+        
+    def getFinish(self):
+        return self.fin
+        
+    def getDiscovery(self):
+        return self.disc
+        
+    def getPred(self):
+        return self.pred
+        
+    def getDistance(self):
+        return self.dist
+        
+    def getColor(self):
+        return self.color
+    
     def getConnections(self):
         return self.connectedTo.keys()
-
-    def getId(self):
-        return self.id
-
+        
     def getWeight(self,nbr):
         return self.connectedTo[nbr]
+                
+    def __str__(self):
+        return str(self.id) + ":color " + self.color + ":disc " + str(self.disc) + ":fin " + str(self.fin) + ":dist " + str(self.dist) + ":pred \n\t[" + str(self.pred)+ "]\n"
+    
+    def getId(self):
+        return self.id
 
 
 class Graph:
@@ -72,15 +136,32 @@ class Graph:
         return iter(self.vertList.values())
 
 
-swedish = Bintree()
-old = Bintree()
-wordQue = ListQ()
+def buildGraph(wordFile):
+    d = {}
+    g = Graph()
+    wfile = open(wordFile,'r')
+    # create buckets of words that differ by one letter
+    for line in wfile:
+        word = line[:-1]
+        for i in range(len(word)):
+            bucket = word[:i] + '_' + word[i+1:]
+            if bucket in d:
+                d[bucket].append(word)
+            else:
+                d[bucket] = [word]
+    # add vertices and edges for words in the same bucket
+    for bucket in d.keys():
+        for word1 in d[bucket]:
+            for word2 in d[bucket]:
+                if word1 != word2:
+                    g.addEdge(word1,word2)
+    return g
 
-with open("word3.txt", "r", encoding = "utf-8") as swedishFile:
-	for line in swedishFile:
-            word = line.strip()       
-            swedish.Put(word)  
-
+wordGraph = buildGraph("word3.txt")
 startWord = input("Enter starting word: ")
+endWord = input("Enter end word: ")
+bfs(wordGraph, wordGraph.getVertex(startWord))
+traverse(wordGraph.getVertex(endWord))
+
 
 

@@ -22,6 +22,9 @@ class Queue:
         return len(self.items)
 
 def bfs(g,start):
+  if start == None:
+    sys.exit("There is no word corresponding to your input of starting word")
+  
   start.setDistance(0)
   start.setPred(None)
   vertQueue = Queue()
@@ -35,8 +38,32 @@ def bfs(g,start):
         nbr.setPred(currentVert)
         vertQueue.enqueue(nbr)
     currentVert.setColor('black')
+  return currentVert.getDistance()
+
+def furthestWord(g, start, end_value):
+  print("\n\nThe word(s) fruthest away from " + str(start) + " would be: ")
+  for start in wordGraph.vertList:
+      start.getVertex().setDistance(0)
+      start.getVertex().setPred(None)
+      vertQueue = Queue()
+      vertQueue.enqueue(start.getVertex())
+      while (vertQueue.size() > 0):
+        currentVert = vertQueue.dequeue()
+        for nbr in currentVert.getConnections():
+          if (nbr.getColor() == 'black'):
+            nbr.setColor('gray')
+            nbr.setDistance(currentVert.getDistance() + 1)
+            if nbr.getDistance() == end_value:
+                print(nbr)
+            nbr.setPred(currentVert)
+            vertQueue.enqueue(nbr)
+        currentVert.setColor('white')
+  
+  
 
 def traverse(y):
+    if y == None:
+        sys.exit("There is no way to get to the word of input")
     x = y
     while (x.getPred()):
         print(x.getId())
@@ -96,7 +123,7 @@ class Vertex:
         return self.connectedTo[nbr]
                 
     def __str__(self):
-        return str(self.id) + ":color " + self.color + ":disc " + str(self.disc) + ":fin " + str(self.fin) + ":dist " + str(self.dist) + ":pred \n\t[" + str(self.pred)+ "]\n"
+        return str(self.id)
     
     def getId(self):
         return self.id
@@ -160,8 +187,9 @@ def buildGraph(wordFile):
 wordGraph = buildGraph("word3.txt")
 startWord = input("Enter starting word: ")
 endWord = input("Enter end word: ")
-bfs(wordGraph, wordGraph.getVertex(startWord))
+endValue = bfs(wordGraph, wordGraph.getVertex(startWord))
 traverse(wordGraph.getVertex(endWord))
+furthestWord(wordGraph, wordGraph.getVertex(startWord), endValue)
 
 
 
